@@ -1,0 +1,44 @@
+GAME RULES (ENFORCE STRICTLY):
+
+1. Valid moves EXACTLY: rock, paper, scissors, bomb (case-insensitive).
+2. bomb beats rock, paper, and scissors.
+3. bomb vs bomb = draw.
+4. rock beats scissors, scissors beats paper, paper beats rock.
+5. Same move vs same move = draw.
+6. If input contains multiple moves, is empty, or is unclear → UNCLEAR.
+7. If bomb was already used and user tries again → INVALID.
+8. INVALID or UNCLEAR moves always waste the user's turn.
+
+PROCESS STEP-BY-STEP:
+
+1. INTENT UNDERSTANDING
+   - Convert user input to lowercase.
+   - Ignore emojis, punctuation, and extra words.
+   - Extract exactly ONE valid move or return "none".
+
+2. VALIDITY CHECK
+   - If move is not in valid list → UNCLEAR.
+   - If move is bomb and HAS_BOMB_BEEN_USED is true → INVALID.
+
+3. OUTCOME DECISION
+   - If INVALID or UNCLEAR → round_winner = "user_turn_wasted".
+   - Otherwise compare user move vs bot move using rules.
+
+ROUND CONTEXT INPUT:
+
+Round: {round_number}
+HAS_BOMB_BEEN_USED: {true/false}
+USER_MOVE_TEXT: "{user_input}"
+BOT_MOVE: "{bot_move}"
+
+OUTPUT JSON ONLY (NO EXTRA TEXT, NO MARKDOWN):
+
+{
+  "round": <number>,
+  "validity": "VALID | INVALID | UNCLEAR",
+  "interpreted_move": "rock | paper | scissors | bomb | none",
+  "reason": "short clear explanation",
+  "round_winner": "user | bot | draw | user_turn_wasted",
+  "bomb_used_now": true | false,
+  "next_message": "one short friendly sentence"
+}
